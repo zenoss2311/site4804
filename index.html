@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mahesa ❤️ Iki</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+overflow:hidden;
+background:linear-gradient(135deg,#ff8fb1,#ffb6d9,#ffd8ea,#fff2f7);
+background-size:400% 400%;
+animation:bg 12s ease infinite;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+@keyframes bg{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+.card{
+position:relative;
+width:92%;
+max-width:850px;
+padding:35px;
+border-radius:30px;
+background:rgba(255,255,255,.18);
+backdrop-filter:blur(18px);
+box-shadow:0 0 40px rgba(255,255,255,.35);
+text-align:center;
+z-index:5;
+color:white;
+}
+
+h1{
+font-size:45px;
+margin-bottom:10px;
+animation:pulse 2s infinite;
+text-shadow:0 0 15px #ff2f92;
+}
+
+h2{
+font-weight:400;
+margin-bottom:25px;
+font-size:22px;
+}
+
+#text{
+font-size:22px;
+line-height:1.8;
+min-height:300px;
+white-space:pre-wrap;
+}
+
+.cursor{
+display:inline-block;
+width:3px;
+height:28px;
+background:white;
+margin-left:3px;
+animation:blink .7s infinite;
+}
+
+button{
+margin-top:25px;
+padding:14px 35px;
+font-size:18px;
+border:none;
+border-radius:50px;
+cursor:pointer;
+background:#ff2f92;
+color:white;
+transition:.3s;
+display:none;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.05);}
+100%{transform:scale(1);}
+}
+
+@keyframes blink{
+50%{opacity:0;}
+}
+
+.heart{
+position:fixed;
+top:-40px;
+font-size:24px;
+animation:fall linear forwards;
+pointer-events:none;
+}
+
+@keyframes fall{
+0%{
+transform:translateY(-50px) rotate(0deg);
+opacity:1;
+}
+100%{
+transform:translateY(110vh) rotate(360deg);
+opacity:0;
+}
+}
+
+#overlay{
+position:fixed;
+inset:0;
+background:linear-gradient(180deg,#ff5f9e,#ffbfd8);
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:999;
+color:white;
+transition:1.5s;
+}
+
+#overlay h1{
+font-size:55px;
+margin-bottom:20px;
+}
+
+#overlay p{
+font-size:22px;
+margin-bottom:35px;
+}
+
+#start{
+display:block;
+padding:15px 40px;
+font-size:20px;
+border:none;
+border-radius:40px;
+background:white;
+color:#ff2f92;
+cursor:pointer;
+font-weight:bold;
+}
+
+.fade{
+opacity:0;
+visibility:hidden;
+}
+</style>
+</head>
+
+<body>
+
+<div id="overlay">
+<h1>❤️ Mahesa ❤️ Iki ❤️</h1>
+
+<p>
+Sebuah pesan yang ditulis dari hati...
+</p>
+
+<button id="start">
+Buka Surat Cinta 💌
+</button>
+
+</div>
+
+<div class="card">
+
+<h1>Mahesa Mencintai Iki</h1>
+
+<h2>Untuk seseorang yang selalu ada di hati...</h2>
+
+<div id="text"></div>
+
+<button id="next">
+Lanjut ❤️
+</button>
+
+</div>
+
+<audio id="music" loop>
+<source src="sempurna.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+const message=`Hai Iki...
+
+Mungkin selama ini aku tidak pernah benar-benar mampu mengungkapkan semua isi hatiku.
+
+Banyak kata yang hanya tersimpan di dalam pikiranku.
+
+Banyak perasaan yang hanya bisa kupendam setiap kali melihat senyummu.
+
+Setiap kali kita berbicara, aku selalu merasa waktunya berjalan begitu cepat.
+
+Aku tidak pernah menyangka akan ada seseorang yang mampu membuatku merasa nyaman hanya dengan kehadirannya.
+
+Orang itu adalah kamu.
+
+Iki...
+
+Terima kasih sudah hadir dalam hidupku.
+
+Terima kasih sudah menjadi alasan mengapa aku bisa tersenyum setiap hari.
+
+Mungkin aku bukan laki-laki yang sempurna.
+
+Aku juga masih memiliki banyak kekurangan.
+
+Tetapi satu hal yang selalu aku yakini...
+
+Aku benar-benar tulus menyayangimu.
+
+Tidak pernah sedikit pun aku berniat mempermainkan perasaanmu.
+
+Aku hanya ingin melihatmu bahagia.
+
+Dan bila suatu hari nanti kebahagiaanmu bisa bersamaku...
+
+Maka itu akan menjadi hadiah terbesar dalam hidupku.
+
+`;
+
+const text=document.getElementById("text");
+
+let index=0;
+
+function typeWriter(){
+
+if(index<message.length){
+
+text.innerHTML=
+message.substring(0,index)
++'<span class="cursor"></span>';
+
+index++;
+
+setTimeout(typeWriter,45);
+
+}else{
+
+document.getElementById("next").style.display="inline-block";
+
+}
+
+}
+
+document.getElementById("start").onclick=()=>{
+
+document.getElementById("overlay").classList.add("fade");
+
+document.getElementById("music").play().catch(()=>{});
+
+setTimeout(typeWriter,1200);
+
+};
+
+function heart(){
+
+const h=document.createElement("div");
+
+h.className="heart";
+
+h.innerHTML=Math.random()>0.5?"💖":"💕";
+
+h.style.left=Math.random()*100+"vw";
+
+h.style.fontSize=(20+Math.random()*30)+"px";
+
+h.style.animationDuration=(4+Math.random()*4)+"s";
+
+document.body.appendChild(h);
+
+setTimeout(()=>{
+
+h.remove();
+
+},8000);
+
+}
+
+setInterval(heart,250);
+
+document.getElementById("next").onclick=()=>{
+const secondMessage = `
+
+Iki...
+
+Sekarang izinkan aku mengatakan sesuatu yang selama ini paling ingin kusampaikan.
+
+Sejak pertama kali aku mengenalmu, aku tidak pernah menyangka bahwa seseorang bisa begitu berarti dalam hidupku.
+
+Sedikit demi sedikit, tanpa kusadari, namamu selalu hadir di pikiranku.
+
+Aku selalu menunggu pesan darimu.
+
+Aku selalu berharap bisa melihat senyummu.
+
+Dan setiap kali mendengar kabarmu, ada rasa bahagia yang sulit dijelaskan dengan kata-kata.
+
+Kamu mengajarkanku bahwa mencintai seseorang bukan hanya tentang memiliki.
+
+Tetapi juga tentang menjaga, menghargai, mendukung, dan selalu mendoakan yang terbaik untuknya.
+
+Aku tidak bisa menjanjikan hidup yang sempurna.
+
+Aku juga tidak bisa menjanjikan bahwa perjalanan kita nanti akan selalu mudah.
+
+Tetapi aku bisa berjanji...
+
+Aku akan selalu berusaha menjadi seseorang yang mampu membuatmu tersenyum.
+
+Aku ingin menjadi tempatmu bercerita.
+
+Menjadi orang pertama yang mengucapkan selamat pagi.
+
+Menjadi orang terakhir yang mengucapkan selamat malam.
+
+Aku ingin menemanimu melewati hari-hari yang indah.
+
+Dan juga hari-hari yang sulit.
+
+Karena menurutku...
+
+Mencintai bukan hanya hadir saat semuanya baik-baik saja.
+
+Tetapi tetap memilih bertahan ketika keadaan tidak mudah.
+
+Iki...
+
+Hari ini...
+
+Dengan seluruh keberanian yang aku kumpulkan...
+
+Dengan seluruh ketulusan yang ada di dalam hatiku...
+
+Aku ingin mengatakan sesuatu.
+
+Aku benar-benar mencintaimu.
+
+Aku sangat menyayangimu.
+
+Dan aku berharap...
+
+Orang yang akan mengisi hari-hariku...
+
+Adalah kamu.
+
+Iki...
+
+Maukah kamu menjadi kekasihku?
+
+`;
+
+text.innerHTML = "";
+index = 0;
+
+function typeSecond(){
+
+if(index < secondMessage.length){
+
+text.innerHTML =
+secondMessage.substring(0,index)
++'<span class="cursor"></span>';
+
+index++;
+
+setTimeout(typeSecond,45);
+
+}else{
+
+text.innerHTML += `
+
+<br><br>
+
+<button id="yes"
+style="
+padding:15px 40px;
+font-size:20px;
+border:none;
+border-radius:50px;
+background:#ff2f92;
+color:white;
+cursor:pointer;
+margin:10px;
+">
+Iya, Aku Mau ❤️
+</button>
+
+<button id="love"
+style="
+padding:15px 40px;
+font-size:20px;
+border:none;
+border-radius:50px;
+background:white;
+color:#ff2f92;
+cursor:pointer;
+margin:10px;
+">
+Selamanya Bersama 💕
+</button>
+`;
+
+document.getElementById("yes").onclick = finish;
+document.getElementById("love").onclick = finish;
+
+}
+
+}
+
+typeSecond();
+
+};
+
+function finish(){
+
+document.querySelector(".card").innerHTML = `
+
+<h1 style="font-size:55px">
+💖 Mahesa ❤️ Iki 💖
+</h1>
+
+<h2 style="margin-top:20px">
+Sekarang kisah ini telah dimulai...
+</h2>
+
+<p style="
+font-size:24px;
+line-height:2;
+margin-top:30px;
+">
+
+Terima kasih sudah menerima perasaanku.
+
+Semoga cinta ini selalu tumbuh setiap hari.
+
+Semoga kita selalu saling menjaga.
+
+Saling memahami.
+
+Saling menguatkan.
+
+Dan semoga suatu hari nanti...
+
+Cerita indah ini menjadi kenangan yang akan kita ceritakan bersama.
+
+❤️
+
+Aku Sayang Kamu, Iki.
+
+Selamanya.
+
+- Mahesa -
+
+</p>
+
+`;
+
+for(let i=0;i<120;i++){
+
+setTimeout(()=>{
+
+const h=document.createElement("div");
+
+h.className="heart";
+
+h.innerHTML=Math.random()>0.5?"❤️":"💖";
+
+h.style.left=Math.random()*100+"vw";
+
+h.style.fontSize=(25+Math.random()*35)+"px";
+
+h.style.animationDuration=(3+Math.random()*3)+"s";
+
+document.body.appendChild(h);
+
+setTimeout(()=>h.remove(),6000);
+
+},i*120);
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
